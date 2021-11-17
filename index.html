@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body> 
+    <script>
+        let div = document.createElement('div');
+        let texto = document.createElement('p');
+        let texto2 = document.createElement('p');
+        let ul = document.createElement('ul');
+        let li1 = document.createElement('li');
+        let li2 = document.createElement('li');
+        let li3 = document.createElement('li');
+        let btn = document.createElement('button');
+        let btn2 = document.createElement('button');
+        let btnExit = document.createElement('button');
+        let mensaje = "";
+        Interfaz();
+        function Interfaz(){
+            Regresar();
+            texto.innerHTML = "Bienvenido al juego del número mágico!!";
+            texto.style.fontWeight = "bold";
+            texto.style.fontSize = "1.3em";
+            div.appendChild(texto);
+            div.appendChild(ul);
+            li1.innerHTML = "Debes adivinar el número mágico que va de 0 a 100."
+            li2.innerHTML = "Escribe 0 para salir del juego."
+            li3.innerHTML = "Tienes 3 intentos para adivinar el número. (en modo difícil)"
+            ul.appendChild(li1);
+            ul.appendChild(li2);
+            ul.appendChild(li3);
+            btn.innerHTML = "Modo Fácil"
+            btn2.innerHTML = "Modo Difícil"
+            div.appendChild(btn);
+            div.appendChild(btn2);
+            document.body.appendChild(div);
+        }
+        
+        btn.addEventListener("click", comprobarFacil);
+        btn2.addEventListener("click", ComprobarDificil);
+
+        function comprobarFacil(){
+            let number = Math.random() * (100-1)+1;
+            let dato = 0;
+            let intento = 1;
+            mensaje = "Intento "+intento+" para adivinar el número: "
+            do{
+                dato = prompt(mensaje);
+                intento++;
+                if(parseInt(dato) == 0){
+                    Loser("Haz salido del juego!!");
+                    break;
+                }else if(parseInt(dato)==parseInt(number)){
+                    Win();
+                    break;
+                }else if(dato > number){
+                    mensaje = "El número ingresado es MAYOR que el mágico!!\nIntento "+intento+" para adivinar el número: "
+                }else if(dato < number){
+                    mensaje = "El número ingresado es MENOR que el mágico!!\nIntento "+intento+" para adivinar el número: "
+                }
+                
+            }while(parseInt(dato) != 0);
+        }
+        
+        function ComprobarDificil(){
+            let number = Math.random() * (100-1)+1;
+            let dato = 0;
+            let intentos = 3;
+            mensaje = "Intento "+intentos+" para adivinar el número: "
+            do{
+                dato = prompt(mensaje);
+                intentos--;
+                if(parseInt(dato) == 0){
+                    Loser("Haz salido del juego!!");
+                    break;
+                }else if(parseInt(dato)==parseInt(number)){
+                    Win();
+                    break;
+                }else if(dato > number){
+                    mensaje = "El número ingresado es MAYOR que el mágico!!\nIntento "+intentos+" para adivinar el número: "
+                }else if(dato < number){
+                    mensaje = "El número ingresado es MENOR que el mágico!!\nIntento "+intentos+" para adivinar el número: "
+                }
+                
+            }while(parseInt(intentos) > 0);
+            if(intentos == 0){
+                Loser("Haz perdido el juego, intentalo de nuevo!");
+            }
+
+        }
+
+        btnExit.addEventListener("click", Salir);
+
+        function Salir(){
+            Interfaz();
+        }
+
+        function Regresar(){
+            texto.style.color = "black";
+            ul.style.display = "block";
+            btn.style.display = "block";
+            btn2.style.display = "block";
+            btnExit.style.display = "none";
+        }
+
+        function Win(){
+            ul.style.display = "none";
+            texto.innerHTML = "Haz ganado el juego!!";
+            texto.style.color = "green";
+            btnExit.innerHTML = "Volver a jugar!";
+            btnExit.style.display = "block";
+            div.appendChild(btnExit);
+            btn.style.display = "none";
+            btn2.style.display = "none";
+        }
+
+        function Loser(mensaje){
+            ul.style.display = 'none';
+            texto.innerText = mensaje
+            texto.style.color = 'red';
+            btnExit.innerHTML = "Salir";
+            btnExit.style.display = "block";
+            div.appendChild(btnExit);
+            btn.style.display = 'none';
+            btn2.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
